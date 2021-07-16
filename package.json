@@ -16,6 +16,7 @@
     "vue-barcode-reader": "0.0.3",
     "vue-barcode-scanner": "^0.8.1",
     "vue-router": "^3.2.0",
+    "vue2-touch-events": "^3.2.2",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
