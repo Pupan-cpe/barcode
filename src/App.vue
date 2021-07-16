@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <h1>vue-barcode-reader demo</h1>
-    <HelloWorld />
+  <div class="hello">
+    <StreamBarcodeReader
+      @decode="(a, b, c) => onDecode(a, b, c)"
+      @loaded="() => onLoaded()"
+    ></StreamBarcodeReader>
+    Input Value: {{ text || "Nothing" }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import { StreamBarcodeReader } from 'vue-barcode-reader'
 
 export default {
-  name: 'App',
+  // name: 'HelloWorld',
   components: {
-    HelloWorld
+    StreamBarcodeReader
+  },
+  data () {
+    return {
+      text: '',
+      id: null
+    }
+  },
+  props: {
+    msg: String
+  },
+  methods: {
+    onDecode (a, b, c) {
+      console.log(a, b, c)
+      this.text = a
+      if (this.id) clearTimeout(this.id)
+      this.id = setTimeout(() => {
+        if (this.text === a) {
+          this.text = ''
+        }
+      }, 5000)
+    },
+    onLoaded () {
+      console.log('load')
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 </style>
